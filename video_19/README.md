@@ -1,6 +1,6 @@
 # Vídeo 19: z-image-turbo grátis + n8n
 
-Alibaba dropped Z-Image-Turbo, a blazing-fast text-to-image model licensed under Apache-2.0, and it's already stealing Flux.2’s spotlight. We put it through a test drive to see if it actually outruns Flux. Plus, get two ways to use Z-Image-Turbo for FREE: using n8n and Modal, or Google Colab...
+A Alibaba lançou o Z-Image-Turbo, um modelo de texto para imagem rapidíssimo licenciado sob Apache-2.0, e já está roubando os holofotes do Flux.2. Testamos para ver se realmente ultrapassa o Flux. Além disso, tenha duas formas de usar o Z-Image-Turbo GRATUITAMENTE: usando n8n e Modal, ou execute no Google Colab...
 
 ## [📚 Entre na nossa comunidade VIP no Whatsapp, muito conteúdo grátis para te ajudar com suas automações!](https://bit.ly/otechlead)
 
