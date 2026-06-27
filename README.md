@@ -2,4 +2,4 @@
 
 ## Índice
 
-1. Vídeo 37 - API de geração de imagens gratuita
+1. Vídeo 19 - Z-Image Turbo grátis no n8n + Modal

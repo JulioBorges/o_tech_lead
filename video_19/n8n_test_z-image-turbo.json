@@ -1,0 +1,173 @@
+{
+  "name": "Test z-image-turbo server",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "image",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        320,
+        528
+      ],
+      "id": "0cc6b38c-38bf-4c5a-b610-44b1c6fdb36d",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<<URL DO SEU SERVIDOR>>/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": " Bearer <<TOKEN DO SEU SERVIDOR>>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"prompt\": \"{{ $json.imagePrompt }}\",\n    \"width\": 1024,\n    \"height\": 1024,\n    \"steps\": 9,\n    \"guidance_scale\":1\n}",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        96,
+        528
+      ],
+      "id": "60808208-05a3-470d-ae81-8641a97bfe9d",
+      "name": "Generate image"
+    },
+    {
+      "parameters": {
+        "formTitle": "Geração de imagem com o Z-Image-Turbo",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Prompt",
+              "fieldType": "textarea",
+              "placeholder": "Ex.: Carro de corrida da nascar amarelo"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -352,
+        528
+      ],
+      "id": "3f144c1c-eb2c-40b7-861e-9f8096df64b2",
+      "name": "On form submission",
+      "webhookId": "f6787a21-02cb-4a31-99f1-515427157c1c"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "showText",
+        "responseText": "=Veja aqui a sua imagem:\n<br/>\n\n<img src=\"data:image/png;base64,{{ $('Generate image').item.json.image }}\" alt=\"Imagem gerada\">\n"
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        544,
+        528
+      ],
+      "id": "746dfbd4-625c-4d21-a56c-d2a2269ee6ed",
+      "name": "Form",
+      "webhookId": "f80cacc3-99aa-4fd4-ac35-3dae1aecd0e4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "49f48000-6fb5-4ab9-bc7d-5bf9c6001ba8",
+              "name": "imagePrompt",
+              "value": "={{ $json.Prompt }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -128,
+        528
+      ],
+      "id": "60b07697-ebd5-4355-a4b6-88cad17f07c0",
+      "name": "CONFIG"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Generate image": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "CONFIG",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CONFIG": {
+      "main": [
+        [
+          {
+            "node": "Generate image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "24a96761-b303-4d3c-ba7b-fc935953de86",
+  "meta": {
+    "instanceId": "4e474214bcf60c1518d0b243ca48faad8775bf534b0cde8f194334c4a5c35e19"
+  },
+  "nodeGroups": [],
+  "id": "e92kpTs150eIIOwh",
+  "tags": []
+}
