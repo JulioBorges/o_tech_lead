@@ -1,0 +1,59 @@
+[00:00] Você é criador de conteúdo e está cansado de pagar caro por APIs de geração de imagem?
+[00:06] Ou ter que ficar gerando as imagens na mão via interface para economizar dinheiro?
+[00:11] Mas, e se eu te contar que todas essas imagens que estão passando na tela, um astronauta andando a cavalo em Marte,
+[00:18] o retrato super realista de uma modelo com detalhes absurdos, ou até uma cena de fantasia digna de Hollywood,
+[00:24] Todas essas imagens foram criadas de graça, via API.
+[00:28] Pois é, todas elas saíram do forno em segundos, com uma qualidade de cair o queixo.
+[00:33] Tudo isso graças ao modelo chinês Z-Image Turbo,
+[00:36] um modelo open source que, além de qualidade, promete rapidez na geração de imagens.
+[00:41] Algo super interessante no Z-Image Turbo é o fato de que ele tem grande capacidade
+[00:46] de trabalhar com prompts detalhados, e quanto mais detalhes, maior a qualidade do resultado.
+[00:51] O Zemage Turbo está disponível no Hugging Face sob a licença Apache, o que significa que você pode usar ele até mesmo em projetos comerciais.
+[01:01] Isso é surreal. Então, eu vou te ensinar duas formas de você rodar o Zemage Turbo para que você consiga gerar milhares de imagens sem gastar nenhum centavo.
+[01:12] Pronto para experimentar por conta própria e gerar várias imagens de graça? Então vamos lá.
+[01:16] No primeiro método, você vai criar um aplicativo serverless, usando a plataforma modal.com.
+[01:22] Primeiro passo, crie a sua conta no site modal.com.
+[01:26] A plataforma te dá 30 dólares por mês na faixa para executar aplicações serverless.
+[01:31] Para receber o benefício, você precisa cadastrar o seu cartão de crédito.
+[01:35] Sim, você precisa cadastrar o seu cartão de crédito.
+[01:38] Mas não se preocupe, você só será cobrado se consumir mais do que 30 dólares.
+[01:42] Uma dica importante é acompanhar o seu consumo na tela inicial, que você também pode configurar um limite de gastos.
+[01:50] Basta ir em Credits, depois em Usage e Billing Settings e definir um Usage Limit.
+[01:55] Configurando um limite de gastos, quando o seu app atingir o limite, ele será encerrado e irá parar de responder.
+[02:01] Após a criação da conta, vamos agora implementar o servidor.
+[02:05] Acesse o repositório GitHub que eu deixei na descrição do vídeo e no primeiro comentário fixado,
+[02:10] e copie o arquivo Python que eu deixei disponível.
+[02:12] Copie o arquivo Python para a pasta desejada e abra o terminal.
+[02:17] No Windows, você precisará iniciar o WSL2 e navegar até esse diretório.
+[02:22] Certifique-se de ter o Python 3 instalado com suporte a ambiente virtual.
+[02:27] Digite o comando que estamos exibindo na tela.
+[02:30] Agora execute o comando Source Activate desta forma.
+[02:33] Agora digite pip install modal.
+[02:35] Isso instalará o pacote.
+[02:37] Quando terminar, digite modal setup.
+[02:39] Isso abrirá uma guia do navegador para autorização.
+[02:42] Clique em autorizar e agora você está conectado no servidor do modal.
+[02:46] Depois que seu terminal mostrar que o token foi verificado,
+[02:50] RodeModal Deploy seguido do arquivo Python.
+[02:53] Isso envia seu aplicativo para a nuvem do modal para a produção.
+[02:57] Você vai receber uma URL de servidor.
+[03:00] Copie e cole ela no N8N no nó de requisição HTTP, como a URL no Workflow.
+[03:08] O Workflow exibe um formulário, nele você edita o prompt, e o N8N faz a requisição, cria a imagem e a converte em um arquivo.
+[03:18] Observe que quando você executa o Workflow pela primeira vez, a execução deve demorar mais, pois o aplicativo do modal está sendo carregado na memória.
+[03:25] Feito isso, as próximas gerações serão mais rápidas.
+[03:29] Usar este método leva cerca de 8 segundos para gerar uma imagem de 1 megapixel e você pode gerar cerca de 6.650 imagens por mês.
+[03:38] Para comparação, usando o Z Image Turbo no Fall.iei, te custaria cerca de US$ 33 pela mesma quantidade de imagens.
+[03:46] Agora vamos para o segundo método.
+[03:48] Você pode usar o Google Collab para gerar imagens de maneira gratuita.
+[03:52] O Google Collab é um serviço de nuvem gratuito hospedado pelo próprio Google,
+[03:56] voltado para pesquisa em aprendizado de máquina e inteligência artificial.
+[04:00] Com ele, você consegue executar código Python nos computadores poderosos do Google.
+[04:04] Com este método, você pode rodar o Jupyter Notebook do Zee Image Turbo dentro do Google Collab.
+[04:10] Basta acessar o meu repositório GitHub e clicar no link do Jupyter Notebook, que ele é carregado imediatamente no Collab.
+[04:18] Rode o primeiro bloco e aguarde. Rode o segundo bloco e aguarde novamente.
+[04:22] Agora, o terceiro bloco é onde você gera suas imagens.
+[04:25] Edite o prompt e execute-o.
+[04:27] A primeira execução vai demorar mais do que as seguintes, cerca de um minuto ou mais, para gerar sua imagem.
+[04:33] Ao contrário do N8N, este método não pode ser automatizado, mas em compensação é 100% gratuito.
+[04:40] Para mais dicas sobre IA, automação e tecnologia, segue o canal O Tech Lead e não perca nenhum conteúdo.
+[04:46] Um abraço e até mais!

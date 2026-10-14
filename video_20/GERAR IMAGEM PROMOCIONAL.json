@@ -1,0 +1,483 @@
+{
+  "name": "GERAR IMAGEM PROMOCIONAL",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "urlImagem"
+            },
+            {
+              "name": "descricaoProduto"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1168,
+        112
+      ],
+      "id": "a3bfb7c0-377d-4051-845f-3cfb9538e961",
+      "name": "WORKFLOW TRIGGER"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('WORKFLOW TRIGGER').item.json.urlImagem }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -1168,
+        352
+      ],
+      "id": "cd8d43e0-1a86-4954-9aa5-f7b4ea9d1485",
+      "name": "CARREGA IMAGEM"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        352
+      ],
+      "id": "2eba7ef7-1802-4e0f-96cb-dfa5bb3a6e54",
+      "name": "CONVERTE PARA BASE64"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('CONFIG').item.json.urlApi }}/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $('CONFIG').item.json.apiKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "prompt",
+              "value": "={{ $('PROMPT').item.json.prompt }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 360000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -720,
+        352
+      ],
+      "id": "1c8517fe-df47-44fc-97bb-130cca6eb233",
+      "name": "REQUISICAO MODAL",
+      "retryOnFail": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "14d2432f-82fb-4de2-a2bd-f74d4b917c7a",
+              "name": "apiKey",
+              "value": "<AQUI VAI O SEU TOKEN DE API>",
+              "type": "string"
+            },
+            {
+              "id": "53ed0199-52a1-444d-9310-6b52cd4eaba3",
+              "name": "urlApi",
+              "value": "<AQUI VAI SUA URL DE API 1>",
+              "type": "string"
+            },
+            {
+              "id": "fa625107-dfb6-4956-b131-a28d038eecdb",
+              "name": "urlApi1",
+              "value": "<AQUI VAI SUA URL DE API 2>",
+              "type": "string"
+            },
+            {
+              "id": "f9a155c9-0d3a-4b04-8f7f-accfa1fac7c1",
+              "name": "urlApi2",
+              "value": "<AQUI VAI SUA URL DE API 3>",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -944,
+        112
+      ],
+      "id": "9b0bdd4a-4682-4f88-85a1-27aa2224bfb2",
+      "name": "CONFIG"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "Atria-Dawn-Preview",
+          "mode": "list",
+          "cachedResultName": "ATRIA-DAWN-PREVIEW"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Gerar um prompt de geração de imagem para promover o produto {{ $('WORKFLOW TRIGGER').item.json.descricaoProduto }} em um grupo de vendas no WhatsApp. O prompt gerado deve estar em inglês e descrever uma fotografia publicitária premium, altamente realista, natural e otimizada para despertar desejo de compra e aumentar conversões. REGRAS DE ADAPTAÇÃO: Analise a descrição e identifique automaticamente a categoria, finalidade, público-alvo, características visuais e principal benefício percebido do produto. Adapte o cenário, personagem, interação, iluminação e composição conforme a categoria. Para eletrônicos e tecnologia, mostre o produto em uso cotidiano moderno, valorizando design e praticidade. Para moda, roupas, calçados e acessórios, apresente uma pessoa usando o item em um contexto fashion lifestyle natural. Para beleza, cosméticos e cuidados pessoais, mostre a aplicação ou utilização realista, valorizando bem-estar e autoestima, sem prometer resultados. Para produtos de casa, decoração e cozinha, apresente o item integrado a um ambiente residencial atraente e funcional. Para ferramentas, equipamentos e utilidades, demonstre seu uso prático em uma situação real. Para esportes e fitness, mostre o produto sendo utilizado em uma atividade compatível. Para produtos infantis, apresente uma cena familiar apropriada à faixa etária e com utilização segura. Para produtos pet, mostre a interação natural entre o animal e o produto. Para alimentos e bebidas, destaque apresentação, textura e consumo em um contexto convidativo. Para produtos automotivos, mostre a aplicação realista no veículo. Para outras categorias, determine automaticamente a situação de uso mais relevante. REGRA PRINCIPAL: A pessoa deve interagir naturalmente com o produto, sem poses artificiais. Quando o uso humano direto não fizer sentido, mostre o produto em seu contexto real de utilização, podendo incluir uma pessoa ao fundo. Preserve as características descritas, sem inventar marcas, funcionalidades ou detalhes técnicos. O produto deve ser o protagonista, claramente visível, reconhecível e proporcional ao ambiente. Utilize fotografia lifestyle profissional, iluminação natural cinematográfica, cores harmoniosas, texturas realistas, profundidade de campo equilibrada e estética comercial sofisticada. Priorize cenas autênticas, emocionalmente envolventes e visualmente impactantes em telas pequenas. COMPOSIÇÃO: Formato vertical 4:5, enquadramento estratégico, produto em destaque e ambiente sem distrações. RESTRIÇÕES: Sem textos, preços, selos, marcas inventadas, marcas d'água, mãos deformadas, anatomia incorreta, elementos irreais, exageros visuais ou promessas enganosas. Gere somente o prompt final em inglês, com no máximo 2000 caracteres, em uma única linha, sem quebras de linha, títulos, explicações ou aspas."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        -944,
+        -128
+      ],
+      "id": "2d28021d-ea20-4877-bd56-9a1a248e4996",
+      "name": "GERAR PROMPT SOMENTE TEXTO",
+      "credentials": {
+        "openAiApi": {
+          "id": "rbht0EAUKLYehcTQ",
+          "name": "OpenAI account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.6-luna",
+          "mode": "list",
+          "cachedResultName": "GPT-5.6-LUNA"
+        },
+        "text": "=Criar um prompt de geração de imagem para promover o produto {{ $('WORKFLOW TRIGGER').item.json.descricaoProduto }} em um grupo de vendas no WhatsApp, utilizando como base tanto a descrição do produto quanto a imagem do produto em anexo. O prompt gerado deve estar em inglês e descrever uma fotografia publicitária premium, altamente realista, natural e otimizada para despertar desejo de compra e aumentar conversões. REGRAS DE ADAPTAÇÃO: Analise a descrição do produto e a imagem anexa para identificar automaticamente a categoria, finalidade, público-alvo, características visuais, materiais, cores, proporções, detalhes de design e principal benefício percebido do produto. Use a imagem anexa como referência visual principal para preservar com fidelidade a aparência do produto, evitando alterações indevidas em formato, acabamento, cor, estrutura ou detalhes importantes. Adapte o cenário, personagem, interação, iluminação e composição conforme a categoria. Para eletrônicos e tecnologia, mostre o produto em uso cotidiano moderno, valorizando design e praticidade. Para moda, roupas, calçados e acessórios, apresente uma pessoa usando o item em um contexto fashion lifestyle natural. Para beleza, cosméticos e cuidados pessoais, mostre a aplicação ou utilização realista, valorizando bem-estar e autoestima, sem prometer resultados. Para produtos de casa, decoração e cozinha, apresente o item integrado a um ambiente residencial atraente e funcional. Para ferramentas, equipamentos e utilidades, demonstre seu uso prático em uma situação real. Para esportes e fitness, mostre o produto sendo utilizado em uma atividade compatível. Para produtos infantis, apresente uma cena familiar apropriada à faixa etária e com utilização segura. Para produtos pet, mostre a interação natural entre o animal e o produto. Para alimentos e bebidas, destaque apresentação, textura e consumo em um contexto convidativo. Para produtos automotivos, mostre a aplicação realista no veículo. Para outras categorias, determine automaticamente a situação de uso mais relevante. REGRA PRINCIPAL: A pessoa deve interagir naturalmente com o produto, sem poses artificiais. Quando o uso humano direto não fizer sentido, mostre o produto em seu contexto real de utilização, podendo incluir uma pessoa ao fundo. Preserve fielmente as características descritas e visuais do produto, sem inventar marcas, funcionalidades ou detalhes técnicos não informados. O produto deve ser o protagonista, claramente visível, reconhecível e proporcional ao ambiente. Utilize fotografia lifestyle profissional, iluminação natural cinematográfica, cores harmoniosas, texturas realistas, profundidade de campo equilibrada e estética comercial sofisticada. Priorize cenas autênticas, emocionalmente envolventes e visualmente impactantes em telas pequenas. COMPOSIÇÃO: Formato vertical 4:5, enquadramento estratégico, produto em destaque e ambiente sem distrações. RESTRIÇÕES: Sem textos, preços, selos, marcas inventadas, marcas d'água, mãos deformadas, anatomia incorreta, elementos irreais, exageros visuais ou promessas enganosas. Gere somente o prompt final em inglês, com no máximo 2000 caracteres, em uma única linha, sem quebras de linha, títulos, explicações ou aspas.",
+        "imageUrls": "={{ $('WORKFLOW TRIGGER').item.json.urlImagem }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        -720,
+        112
+      ],
+      "id": "0a42b5ae-c95e-4516-825e-4c7411a52132",
+      "name": "GERAR PROMPT COM IMAGEM DE REFERENCIA",
+      "credentials": {
+        "openAiApi": {
+          "id": "FQ0G3XAmxz528JLZ",
+          "name": "OpenAI Oficial"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "image",
+        "binaryPropertyName": "=data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -80,
+        208
+      ],
+      "id": "e827cf7b-d5eb-4fbf-b465-81296a4efa2e",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "eabee260-4d15-4c10-8f6b-938e018cff21",
+              "name": "prompt",
+              "value": "={{ $json['1'].content[0].text }}",
+              "type": "string"
+            },
+            {
+              "id": "df33c9a7-00ca-444d-ad95-cde6cfd9ac14",
+              "name": "prompt2",
+              "value": "={{ $json.output[0].content[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -496,
+        112
+      ],
+      "id": "c9a4acd1-cdf1-41f1-b243-5eeb7d5e41f3",
+      "name": "PROMPT"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('CONFIG').item.json.urlApi2 }}/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $('CONFIG').item.json.apiKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "prompt",
+              "value": "={{ $('PROMPT').item.json.prompt }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 360000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -496,
+        464
+      ],
+      "id": "599b8e50-fe7c-48a8-a18c-34301ae61701",
+      "name": "REQUISICAO MODAL1",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('CONFIG').item.json.urlApi3 }}/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $('CONFIG').item.json.apiKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "prompt",
+              "value": "={{ $('PROMPT').item.json.prompt }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 360000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -272,
+        608
+      ],
+      "id": "4a08e649-c373-48dc-b69d-103dd2d00b0d",
+      "name": "REQUISICAO MODAL2"
+    },
+    {
+      "parameters": {
+        "content": "# Este node é para gerar um prompt contendo somente texto sem analisar a imagem\n\n## Para utilizar este node voce deve incluir ele no lugar do node `GERAR PROMPT COM IMAGEM DE REFERENCIA` e trocar a variavel prompt dentro do node `PROMPT` para usar o que esta no valor prompt2",
+        "height": 384,
+        "width": 800,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1216,
+        -320
+      ],
+      "id": "33573034-b039-4c39-b544-55987b124fa8",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {
+    "WORKFLOW TRIGGER": [
+      {
+        "json": {
+          "urlImagem": "https://http2.mlstatic.com/D_NQ_NP_2X_669795-MLB106875299799_022026-F-chuteira-vini-jr-society-nike-mercurial-vapor-16-club-infant.jpg",
+          "descricaoProduto": "Chuteira Vini Jr Society Nike Mercurial Vapor 16 Club"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "WORKFLOW TRIGGER": {
+      "main": [
+        [
+          {
+            "node": "CONFIG",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CARREGA IMAGEM": {
+      "main": [
+        [
+          {
+            "node": "CONVERTE PARA BASE64",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CONVERTE PARA BASE64": {
+      "main": [
+        [
+          {
+            "node": "REQUISICAO MODAL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CONFIG": {
+      "main": [
+        [
+          {
+            "node": "GERAR PROMPT COM IMAGEM DE REFERENCIA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GERAR PROMPT SOMENTE TEXTO": {
+      "main": [
+        []
+      ]
+    },
+    "GERAR PROMPT COM IMAGEM DE REFERENCIA": {
+      "main": [
+        [
+          {
+            "node": "PROMPT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "REQUISICAO MODAL": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "REQUISICAO MODAL1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PROMPT": {
+      "main": [
+        [
+          {
+            "node": "CARREGA IMAGEM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "REQUISICAO MODAL1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "REQUISICAO MODAL2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "REQUISICAO MODAL2": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "a9630e8d-1dfd-4e80-a2c8-54c8bd6e7a27",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4cefd0a7edee1d1192a68e9cf03d0fc65687739ea3577ad3a30170fc09944930"
+  },
+  "nodeGroups": [],
+  "id": "kdChjiACAHDJTlBl",
+  "tags": []
+}
